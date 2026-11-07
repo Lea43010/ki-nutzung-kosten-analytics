@@ -69,6 +69,10 @@ bash run_pipeline.sh
 
 Die Zugangsdaten stehen nur in der lokalen Datei `.env`. Sie wird von Git ignoriert und nie hochgeladen.
 
+## Selbst erweitern (für Fachbereiche)
+
+Du möchtest eine eigene Frage beantworten? Die Anleitung [Eigene Auswertung ergänzen](docs/eigene-auswertung-ergaenzen.md) führt in etwa 30 Minuten Schritt für Schritt zu einer sechsten Auswertung, ohne Programmierkenntnisse. Sie zeigt auch, wie man eine KI um Hilfe bittet und warum man ihr Ergebnis trotzdem selbst prüfen muss.
+
 ## Projektstruktur
 
 ```
@@ -84,6 +88,7 @@ Die Zugangsdaten stehen nur in der lokalen Datei `.env`. Sie wird von Git ignori
 │   └── profiles.yml.example    # Vorlage für die Verbindung zu Snowflake
 ├── docs/
 │   ├── fachfragen.md           # Fachfragen und Entscheidungen
+│   ├── eigene-auswertung-ergaenzen.md  # Anleitung für Fachbereiche
 │   └── architektur.svg         # Architekturbild
 └── .env.example                # Vorlage für die Zugangsdaten
 ```
