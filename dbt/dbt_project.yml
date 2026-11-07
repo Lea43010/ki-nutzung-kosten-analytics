@@ -1,0 +1,17 @@
+# dbt-Projekt: Aufbereitung der KI-Nutzungsdaten in Snowflake
+name: 'ki_nutzung'
+version: '1.0.0'
+config-version: 2
+profile: 'ki_nutzung'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+models:
+  ki_nutzung:
+    staging:
+      +materialized: view     # bereinigte Daten als Sicht, kostet keinen Speicher
+      +schema: staging
+    marts:
+      +materialized: table    # fertige Auswertungen als Tabelle
+      +schema: marts

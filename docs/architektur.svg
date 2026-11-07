@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="pfeil" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="520" fill="#ffffff"/>
+
+  <text x="500" y="38" text-anchor="middle" font-size="22" font-weight="600" fill="#0f172a">KI-Nutzung und -Kosten: Datenfluss</text>
+  <text x="500" y="62" text-anchor="middle" font-size="13" fill="#64748b">Alle Daten sind synthetisch. Ein Befehl führt alles aus: bash run_pipeline.sh</text>
+
+  <!-- Spaltenüberschriften -->
+  <text x="100" y="105" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">1  QUELLE</text>
+  <text x="290" y="105" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">2  LADEN</text>
+  <text x="620" y="105" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">3  SNOWFLAKE  (dbt bereitet auf)</text>
+  <text x="900" y="105" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">4  NUTZEN</text>
+
+  <!-- 1 Quelle -->
+  <rect x="30" y="125" width="140" height="150" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="100" y="155" text-anchor="middle" font-size="15" font-weight="600" fill="#0f172a">Beispieldaten</text>
+  <text x="100" y="180" text-anchor="middle" font-size="12" fill="#334155">Python-Skript</text>
+  <text x="100" y="198" text-anchor="middle" font-size="12" fill="#334155">erzeugt 5 CSV-Dateien</text>
+  <text x="100" y="228" text-anchor="middle" font-size="12" fill="#64748b">Nutzer, Abteilungen,</text>
+  <text x="100" y="244" text-anchor="middle" font-size="12" fill="#64748b">Modelle, Anwendungs-</text>
+  <text x="100" y="260" text-anchor="middle" font-size="12" fill="#64748b">fälle, Ereignisse</text>
+
+  <!-- 2 Laden -->
+  <rect x="215" y="145" width="150" height="110" rx="10" fill="#fef3c7" stroke="#d97706"/>
+  <text x="290" y="177" text-anchor="middle" font-size="15" font-weight="600" fill="#0f172a">load_raw.py</text>
+  <text x="290" y="200" text-anchor="middle" font-size="12" fill="#334155">lädt die CSV-Dateien</text>
+  <text x="290" y="218" text-anchor="middle" font-size="12" fill="#334155">unverändert hoch und</text>
+  <text x="290" y="236" text-anchor="middle" font-size="12" fill="#334155">prüft die Zeilenzahl</text>
+
+  <!-- 3 Snowflake Rahmen -->
+  <rect x="400" y="125" width="440" height="230" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-dasharray="6 4"/>
+
+  <rect x="420" y="160" width="115" height="160" rx="10" fill="#ffffff" stroke="#2563eb"/>
+  <text x="477" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1d4ed8">RAW</text>
+  <text x="477" y="212" text-anchor="middle" font-size="12" fill="#334155">Rohdaten,</text>
+  <text x="477" y="228" text-anchor="middle" font-size="12" fill="#334155">nichts wird</text>
+  <text x="477" y="244" text-anchor="middle" font-size="12" fill="#334155">verändert</text>
+  <text x="477" y="290" text-anchor="middle" font-size="11" fill="#64748b">5 Tabellen</text>
+
+  <rect x="572" y="160" width="115" height="160" rx="10" fill="#ffffff" stroke="#2563eb"/>
+  <text x="629" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1d4ed8">STAGING</text>
+  <text x="629" y="212" text-anchor="middle" font-size="12" fill="#334155">bereinigt:</text>
+  <text x="629" y="228" text-anchor="middle" font-size="12" fill="#334155">Duplikate weg,</text>
+  <text x="629" y="244" text-anchor="middle" font-size="12" fill="#334155">Typen korrekt</text>
+  <text x="629" y="290" text-anchor="middle" font-size="11" fill="#64748b">5 Sichten</text>
+
+  <rect x="724" y="160" width="100" height="160" rx="10" fill="#ffffff" stroke="#2563eb"/>
+  <text x="774" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1d4ed8">MARTS</text>
+  <text x="774" y="212" text-anchor="middle" font-size="12" fill="#334155">fertige</text>
+  <text x="774" y="228" text-anchor="middle" font-size="12" fill="#334155">Auswertungen</text>
+  <text x="774" y="290" text-anchor="middle" font-size="11" fill="#64748b">1 Fakt + 5 Marts</text>
+
+  <text x="620" y="342" text-anchor="middle" font-size="11" fill="#64748b">dbt-Modelle: Staging, Faktentabelle, Auswertungen</text>
+
+  <!-- 4 Nutzen -->
+  <rect x="860" y="125" width="130" height="230" rx="10" fill="#ecfdf5" stroke="#059669"/>
+  <text x="925" y="153" text-anchor="middle" font-size="15" font-weight="600" fill="#0f172a">Fachbereiche</text>
+  <text x="925" y="182" text-anchor="middle" font-size="11.5" fill="#334155">Kosten je Abteilung</text>
+  <text x="925" y="200" text-anchor="middle" font-size="11.5" fill="#334155">Aktive Nutzer</text>
+  <text x="925" y="218" text-anchor="middle" font-size="11.5" fill="#334155">Risikoklassen und</text>
+  <text x="925" y="234" text-anchor="middle" font-size="11.5" fill="#334155">Dokumentation</text>
+  <text x="925" y="252" text-anchor="middle" font-size="11.5" fill="#334155">Kosten je Anfrage</text>
+  <text x="925" y="270" text-anchor="middle" font-size="11.5" fill="#334155">Datenqualität</text>
+  <text x="925" y="318" text-anchor="middle" font-size="11" fill="#64748b">z. B. für Power BI</text>
+  <text x="925" y="334" text-anchor="middle" font-size="11" fill="#64748b">oder SQL-Abfragen</text>
+
+  <!-- Pfeile -->
+  <line x1="170" y1="200" x2="213" y2="200" stroke="#475569" stroke-width="2" marker-end="url(#pfeil)"/>
+  <line x1="365" y1="200" x2="418" y2="220" stroke="#475569" stroke-width="2" marker-end="url(#pfeil)"/>
+  <line x1="535" y1="240" x2="570" y2="240" stroke="#475569" stroke-width="2" marker-end="url(#pfeil)"/>
+  <line x1="687" y1="240" x2="722" y2="240" stroke="#475569" stroke-width="2" marker-end="url(#pfeil)"/>
+  <line x1="824" y1="240" x2="858" y2="240" stroke="#475569" stroke-width="2" marker-end="url(#pfeil)"/>
+
+  <!-- Qualitätsleiste -->
+  <rect x="30" y="385" width="940" height="100" rx="10" fill="#fdf2f8" stroke="#db2777"/>
+  <text x="50" y="414" font-size="14" font-weight="600" fill="#0f172a">Datenqualität: 17 automatische Tests (dbt test)</text>
+  <text x="50" y="438" font-size="12.5" fill="#334155">Vier Datenfehler sind bewusst eingebaut: doppelte Ereignisse, Ereignisse ohne Anwendungsfall,</text>
+  <text x="50" y="456" font-size="12.5" fill="#334155">Nutzung nach dem Austritt, Nutzer mit unbekannter Abteilung. Die Pipeline macht sie sichtbar,</text>
+  <text x="50" y="474" font-size="12.5" fill="#334155">statt sie stillschweigend zu verändern.</text>
+  <text x="950" y="414" text-anchor="end" font-size="12" fill="#64748b">Werkzeuge: Python · Snowflake · dbt · Git/GitHub · Claude</text>
+</svg>

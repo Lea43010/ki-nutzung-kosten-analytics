@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Rohdaten, unverändert aus den CSV-Dateien geladen (alle Spalten als Text)."
+    database: KI_NUTZUNG
+    schema: RAW
+    tables:
+      - name: departments
+      - name: ai_models
+      - name: users
+      - name: use_cases
+      - name: usage_events

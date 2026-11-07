@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: fct_usage_events
+    description: "Ein Eintrag je bereinigtem Nutzungsereignis, mit Kosten und Qualitätsmarkierungen."
+    columns:
+      - name: event_id
+        data_tests: [unique, not_null]
+      - name: kosten_eur
+        data_tests: [not_null]
+
+  - name: mart_kosten_je_abteilung_monat
+    description: "Frage 1: KI-Kosten je Abteilung und Monat."
+  - name: mart_aktive_nutzer_monat
+    description: "Frage 2: Aktive Nutzer je Monat und Abteilung."
+  - name: mart_anwendungsfaelle_konformitaet
+    description: "Frage 3: Anteil freigegebener und dokumentierter Anwendungsfälle je Risikoklasse."
+  - name: mart_kosten_je_anwendungsfall
+    description: "Frage 4: Kosten je erfolgreicher Anfrage und Anwendungsfall."
+  - name: mart_datenqualitaet
+    description: "Frage 5: Zählung der bewusst eingebauten Datenqualitätsprobleme."

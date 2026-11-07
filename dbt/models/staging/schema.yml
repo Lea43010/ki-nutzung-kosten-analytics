@@ -1,0 +1,57 @@
+version: 2
+
+# Tests: prüfen automatisch, ob die Daten stimmen.
+# severity: warn heißt: Das Problem wird gemeldet, die Verarbeitung läuft weiter.
+# Die vier bewusst eingebauten Datenfehler erscheinen so als sichtbare Warnungen.
+
+models:
+  - name: stg_departments
+    columns:
+      - name: department_id
+        data_tests: [unique, not_null]
+
+  - name: stg_ai_models
+    columns:
+      - name: model_id
+        data_tests: [unique, not_null]
+
+  - name: stg_users
+    columns:
+      - name: user_id
+        data_tests: [unique, not_null]
+      - name: department_id
+        description: "Unbekannte Abteilungen (z. B. D99) sind ein bewusst eingebautes Datenproblem."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_departments')
+                field: department_id
+              config:
+                severity: warn
+
+  - name: stg_use_cases
+    columns:
+      - name: use_case_id
+        data_tests: [unique, not_null]
+      - name: risk_class
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['minimal', 'begrenzt', 'hoch']
+
+  - name: stg_usage_events
+    columns:
+      - name: event_id
+        description: "Nach dem Entfernen der Duplikate eindeutig."
+        data_tests: [unique, not_null]
+      - name: use_case_id
+        description: "Fehlende Zuordnungen sind ein bewusst eingebautes Datenproblem."
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['erfolg', 'fehler']

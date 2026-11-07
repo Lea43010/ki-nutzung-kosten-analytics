@@ -1,0 +1,16 @@
+# Vorlage für die Verbindung von dbt zu Snowflake.
+# Kopiere diese Datei nach "profiles.yml" (wird von Git ignoriert).
+# Die Zugangsdaten kommen aus den Umgebungsvariablen (siehe .env), nichts steht hier im Klartext.
+ki_nutzung:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'ACCOUNTADMIN') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'KI_NUTZUNG_WH') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'KI_NUTZUNG') }}"
+      schema: staging
+      threads: 4
