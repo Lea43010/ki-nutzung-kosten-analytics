@@ -6,16 +6,19 @@ version: 2
 
 models:
   - name: stg_departments
+    description: "Abteilungen des Unternehmens (bereinigte Stammdaten)."
     columns:
       - name: department_id
         data_tests: [unique, not_null]
 
   - name: stg_ai_models
+    description: "KI-Modelle mit ihren Preisen je 1.000 Eingabe- und Ausgabe-Token."
     columns:
       - name: model_id
         data_tests: [unique, not_null]
 
   - name: stg_users
+    description: "Nutzer mit Abteilung, Eintritts- und Austrittsdatum."
     columns:
       - name: user_id
         data_tests: [unique, not_null]
@@ -30,6 +33,7 @@ models:
                 severity: warn
 
   - name: stg_use_cases
+    description: "Anwendungsfälle der KI mit Risikoklasse, Status und Dokumentationsstand."
     columns:
       - name: use_case_id
         data_tests: [unique, not_null]
@@ -40,6 +44,7 @@ models:
                 values: ['minimal', 'begrenzt', 'hoch']
 
   - name: stg_usage_events
+    description: "Jede KI-Anfrage genau einmal (Duplikate entfernt), mit Token-Mengen und Status."
     columns:
       - name: event_id
         description: "Nach dem Entfernen der Duplikate eindeutig."

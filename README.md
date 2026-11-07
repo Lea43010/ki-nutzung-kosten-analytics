@@ -18,7 +18,7 @@ Dieses Projekt beantwortet fünf solcher Fragen mit einer wiederholbaren Pipelin
 | 2. Wie viele aktive Nutzer gibt es je Monat? | `MART_AKTIVE_NUTZER_MONAT` |
 | 3. Welcher Anteil der Anwendungsfälle ist freigegeben und dokumentiert? | `MART_ANWENDUNGSFAELLE_KONFORMITAET` |
 | 4. Welche Anwendungsfälle kosten je Anfrage am meisten? | `MART_KOSTEN_JE_ANWENDUNGSFALL` |
-| 5. Wo liegen Datenqualitätsprobleme? | `MART_DATENQUALITAET` |
+| 5. Wo liegen Datenqualitätsprobleme? | `MART_DATENQUALITAET` und `MART_DATENQUALITAET_DETAILS` |
 
 Die Rechenregeln und getroffenen Entscheidungen stehen in [docs/fachfragen.md](docs/fachfragen.md). Beispiele: Fehlgeschlagene Anfragen kosten nichts, und „aktiv“ heißt mindestens eine erfolgreiche Anfrage im Monat.
 
@@ -34,6 +34,8 @@ Ein Befehl führt alles aus: Daten erzeugen, laden, aufbereiten, auswerten und p
 
 ## Datenqualität
 
+*Ausführlich und für Fachbereiche erklärt: [Datenqualität verstehen](docs/datenqualitaet-verstehen.md).*
+
 17 automatische Tests prüfen die Daten (dbt test). Vier Probleme sind **bewusst in die Beispieldaten eingebaut**:
 
 - doppelte Ereignisse
@@ -41,7 +43,7 @@ Ein Befehl führt alles aus: Daten erzeugen, laden, aufbereiten, auswerten und p
 - Nutzung nach dem Austritt eines Nutzers
 - Nutzer mit unbekannter Abteilung
 
-Die Pipeline macht sie sichtbar (zwei als Test-Warnungen, alle vier in `MART_DATENQUALITAET`), statt sie stillschweigend zu verändern. Fachbereiche sehen so, wo ihre Daten Aufmerksamkeit brauchen.
+Die Pipeline macht sie sichtbar (zwei als Test-Warnungen, alle vier in `MART_DATENQUALITAET` mit Ampel, Erklärung, Empfehlung und Zuständigkeit), statt sie stillschweigend zu verändern. Eine Detailliste (`MART_DATENQUALITAET_DETAILS`) zeigt die einzelnen betroffenen Datensätze. Mit `dbt docs` entsteht zusätzlich eine Dokumentationsseite mit Datenfluss-Diagramm. Fachbereiche sehen so, wo ihre Daten Aufmerksamkeit brauchen.
 
 ## Selbst ausprobieren
 
@@ -93,6 +95,7 @@ Du möchtest eine eigene Frage beantworten? Die Anleitung [Eigene Auswertung erg
 ├── docs/
 │   ├── fachfragen.md           # Fachfragen und Entscheidungen
 │   ├── schnellstart-anfaenger.md       # Einrichtung für absolute Anfänger
+│   ├── datenqualitaet-verstehen.md     # Datenqualität für Fachbereiche erklärt
 │   ├── eigene-auswertung-ergaenzen.md  # Anleitung für Fachbereiche
 │   └── architektur.svg         # Architekturbild
 └── .env.example                # Vorlage für die Zugangsdaten

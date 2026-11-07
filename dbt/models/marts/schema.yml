@@ -2,20 +2,37 @@ version: 2
 
 models:
   - name: fct_usage_events
-    description: "Ein Eintrag je bereinigtem Nutzungsereignis, mit Kosten und Qualitätsmarkierungen."
+    description: "Ein Eintrag je bereinigter KI-Anfrage, angereichert mit Kosten, Abteilung und Qualitätsmarkierungen. Grundlage aller Auswertungen."
     columns:
       - name: event_id
+        description: "Eindeutige Nummer der Anfrage."
         data_tests: [unique, not_null]
+      - name: event_monat
+        description: "Monat der Anfrage (erster Tag des Monats)."
+      - name: department_name
+        description: "Abteilung des Nutzers. Unbekannt, wenn keine Zuordnung möglich ist."
+      - name: ist_erfolg
+        description: "Wahr, wenn die Anfrage erfolgreich war."
       - name: kosten_eur
+        description: "Kosten der Anfrage in Euro. Fehlgeschlagene Anfragen kosten nichts."
         data_tests: [not_null]
+      - name: hat_anwendungsfall
+        description: "Wahr, wenn die Anfrage einem Anwendungsfall zugeordnet ist."
+      - name: ist_nach_austritt
+        description: "Wahr, wenn die Anfrage nach dem Austritt des Nutzers erfolgte."
 
   - name: mart_kosten_je_abteilung_monat
     description: "Frage 1: KI-Kosten je Abteilung und Monat."
   - name: mart_aktive_nutzer_monat
-    description: "Frage 2: Aktive Nutzer je Monat und Abteilung."
+    description: "Frage 2: Aktive Nutzer je Monat und Abteilung. Aktiv heißt: mindestens eine erfolgreiche Anfrage im Monat."
   - name: mart_anwendungsfaelle_konformitaet
-    description: "Frage 3: Anteil freigegebener und dokumentierter Anwendungsfälle je Risikoklasse."
+    description: "Frage 3: Anteil der freigegebenen und vollständig dokumentierten Anwendungsfälle je Risikoklasse."
   - name: mart_kosten_je_anwendungsfall
     description: "Frage 4: Kosten je erfolgreicher Anfrage und Anwendungsfall."
   - name: mart_datenqualitaet
-    description: "Frage 5: Zählung der bewusst eingebauten Datenqualitätsprobleme."
+    description: "Frage 5: Übersicht der Datenqualitätsprüfungen mit Ampel, Erklärung, Empfehlung und Zuständigkeit."
+    columns:
+      - name: ampel
+        description: "grün = keine Auffälligkeit, gelb = weniger als 1 % betroffen, rot = 1 % oder mehr betroffen."
+  - name: mart_datenqualitaet_details
+    description: "Die einzelnen betroffenen Datensätze zu jeder Datenqualitätsprüfung."
