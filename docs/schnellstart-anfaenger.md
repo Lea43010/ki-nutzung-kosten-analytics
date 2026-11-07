@@ -85,6 +85,8 @@ pip install -r requirements.txt
 - Der zweite schaltet ihn ein. Danach steht vorne im Terminal `(.venv)`.
 - Der dritte installiert alle nötigen Hilfsprogramme. Das dauert einige Minuten und zeigt viel Text. Das ist normal.
 
+**Und dbt?** Es ist bei diesem dritten Befehl schon dabei. Du musst dbt nicht extra installieren oder einrichten. Die Verbindungsdatei legt `run_pipeline.sh` in Teil 8 automatisch an.
+
 Falls VS Code fragt, ob es die neue Umgebung verwenden soll, klicke auf **Ja**.
 
 ---
@@ -161,6 +163,8 @@ ORDER BY EVENT_MONAT DESC, KOSTEN_EUR DESC;
 SELECT * FROM KI_NUTZUNG.MARTS.MART_DATENQUALITAET;
 ```
 
+**Was die Ampel bedeutet:** Grün heißt keine Auffälligkeiten, Gelb weniger als 1 % betroffene Zeilen, Rot 1 % oder mehr. Wie du die Ergebnisse liest und wer sich um welches Problem kümmern sollte, steht in [Datenqualität verstehen](datenqualitaet-verstehen.md).
+
 **Freigabestatus der KI-Anwendungsfälle:**
 
 ```sql
@@ -193,8 +197,10 @@ SELECT * FROM KI_NUTZUNG.MARTS.MART_ANWENDUNGSFAELLE_KONFORMITAET;
 
 ## Wie geht es weiter?
 
+- Verstehe die Datenqualität und die Ampel: [Datenqualität verstehen](datenqualitaet-verstehen.md)
 - Verstehe die Rechenregeln: [Fachfragen und Entscheidungen](fachfragen.md)
 - Baue eine eigene Auswertung: [Eigene Auswertung ergänzen](eigene-auswertung-ergaenzen.md)
 - Lies im [README](../README.md), wie die Teile zusammenspielen.
+- Sieh dir die Dokumentation der Daten an: Gib im Ordner `dbt` (`cd dbt`) den Befehl `dbt docs generate --profiles-dir .` und danach `dbt docs serve --profiles-dir .` ein. Im Browser siehst du alle Tabellen, Spalten, Tests und ihre Zusammenhänge.
 
 Wenn du echte Unternehmensdaten auswerten möchtest, ist das ein **eigenes Projekt**: Es braucht die Freigabe von IT und Datenschutz und eine abgestimmte Plattform. Dieses Beispiel zeigt dir, wie ein solches Projekt aussehen kann.
