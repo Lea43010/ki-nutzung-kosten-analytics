@@ -1,45 +1,103 @@
-# Bau-Structura Zugangsseite
+# KI-Nutzung und -Kosten auswerten
 
-Diese HTML-Seite bietet eine zentrale Informationsquelle für den Zugriff auf die Bau-Structura App Testumgebung.
+Eine Datenpipeline, die zeigt, **was KI im Unternehmen kostet, wer sie nutzt und ob die Anwendungsfälle sauber freigegeben und dokumentiert sind**. Gebaut mit Snowflake, dbt und Python. Alle Daten sind synthetisch (frei erfunden).
 
-## Schnellstart-Anleitung zum Hosten
+![Datenfluss von den Beispieldaten bis zu den Auswertungen](docs/architektur.svg)
 
-### Option 1: GitHub Pages
+## Worum geht es?
 
-1. Erstellen Sie ein neues GitHub-Repository
-2. Laden Sie die Datei `access.html` hoch und benennen Sie sie in `index.html` um
-3. Aktivieren Sie GitHub Pages in den Repository-Einstellungen
-4. Wählen Sie den Branch und Ordner aus, in dem sich Ihre `index.html` befindet
-5. Die Seite ist dann unter `https://[ihr-username].github.io/[repo-name]` erreichbar
+Viele Unternehmen setzen KI-Werkzeuge ein, haben aber keinen Überblick: Welche Abteilung verursacht welche Kosten? Wie viele Menschen nutzen die Werkzeuge wirklich? Sind riskante Anwendungen freigegeben und dokumentiert, wie es zum Beispiel der EU AI Act verlangt?
 
-### Option 2: Netlify Drop
+Dieses Projekt beantwortet fünf solcher Fragen mit einer wiederholbaren Pipeline. Es soll zeigen, dass sich eine verständliche, getestete Datenlieferung aufbauen lässt, wenn man die Fachlogik versteht und moderne Werkzeuge nutzt.
 
-1. Besuchen Sie [Netlify Drop](https://app.netlify.com/drop)
-2. Ziehen Sie die `access.html` Datei per Drag & Drop in das Fenster
-3. Netlify generiert sofort eine öffentliche URL
-4. Optional: Passen Sie die Domain an oder verbinden Sie eine eigene Domain
+## Was liefert das Projekt? (für Fachbereiche)
 
-### Option 3: Einfaches S3 Hosting (AWS)
+| Frage | Auswertung (Snowflake, Schema `MARTS`) |
+|---|---|
+| 1. Was kostet KI pro Abteilung und Monat? | `MART_KOSTEN_JE_ABTEILUNG_MONAT` |
+| 2. Wie viele aktive Nutzer gibt es je Monat? | `MART_AKTIVE_NUTZER_MONAT` |
+| 3. Welcher Anteil der Anwendungsfälle ist freigegeben und dokumentiert? | `MART_ANWENDUNGSFAELLE_KONFORMITAET` |
+| 4. Welche Anwendungsfälle kosten je Anfrage am meisten? | `MART_KOSTEN_JE_ANWENDUNGSFALL` |
+| 5. Wo liegen Datenqualitätsprobleme? | `MART_DATENQUALITAET` |
 
-1. Erstellen Sie einen S3 Bucket in Ihrem AWS-Konto
-2. Aktivieren Sie die Option "Static website hosting"
-3. Laden Sie die `access.html` hoch und benennen Sie sie in `index.html` um
-4. Konfigurieren Sie die Berechtigungen für öffentlichen Zugriff
-5. Die Seite ist dann unter der S3-Website-URL erreichbar
+Die Rechenregeln und getroffenen Entscheidungen stehen in [docs/fachfragen.md](docs/fachfragen.md). Beispiele: Fehlgeschlagene Anfragen kosten nichts, und „aktiv“ heißt mindestens eine erfolgreiche Anfrage im Monat.
 
-## Anpassung der Seite
+## So funktioniert es
 
-Sie können folgende Informationen in der Seite anpassen:
+Die Daten durchlaufen drei Schichten in Snowflake:
 
-- URLs zu Ihrer Anwendung
-- Fehlerbehebungstipps
-- Kontaktinformationen
-- Logo und Farbschema
+1. **RAW:** Die Rohdaten, genau so wie angeliefert. Nichts wird verändert.
+2. **STAGING:** Bereinigte Daten. Doppelte Einträge sind entfernt, Zahlen und Datumswerte haben die richtigen Typen.
+3. **MARTS:** Die fertigen Auswertungen für die Fachbereiche.
 
-## Zusätzliche Tipps
+Ein Befehl führt alles aus: Daten erzeugen, laden, aufbereiten, auswerten und prüfen.
 
-1. **QR-Code**: Fügen Sie einen QR-Code hinzu, der auf Ihre Testumgebung verweist, für einfachen mobilen Zugriff
-2. **Passwortschutz**: Falls nötig, können Sie die Seite mit einem einfachen Passwortschutz versehen
-3. **Analytics**: Fügen Sie ein Analytics-Tool hinzu, um die Nutzung der Seite zu verfolgen
+## Datenqualität
 
-Diese Lösung bietet einen zuverlässigen, zentralen Zugangspunkt für alle Tester, unabhängig von den technischen Einschränkungen der Tunneling-Lösungen.
+17 automatische Tests prüfen die Daten (dbt test). Vier Probleme sind **bewusst in die Beispieldaten eingebaut**:
+
+- doppelte Ereignisse
+- Ereignisse ohne Zuordnung zu einem Anwendungsfall
+- Nutzung nach dem Austritt eines Nutzers
+- Nutzer mit unbekannter Abteilung
+
+Die Pipeline macht sie sichtbar (zwei als Test-Warnungen, alle vier in `MART_DATENQUALITAET`), statt sie stillschweigend zu verändern. Fachbereiche sehen so, wo ihre Daten Aufmerksamkeit brauchen.
+
+## Selbst ausprobieren
+
+**Voraussetzungen:** Python (getestet mit 3.12), ein Snowflake-Konto (ein Testkonto genügt) und Git.
+
+```bash
+# 1. Repository holen
+git clone https://github.com/Lea43010/ki-nutzung-kosten-analytics.git
+cd ki-nutzung-kosten-analytics
+
+# 2. Python-Umgebung und Pakete
+python -m venv .venv
+source .venv/Scripts/activate      # Linux/Mac: source .venv/bin/activate
+pip install -r requirements.txt
+
+# 3. Snowflake einmalig vorbereiten:
+#    Inhalt von sql/setup_snowflake.sql in Snowflake ausführen
+
+# 4. Zugangsdaten eintragen
+cp .env.example .env               # danach .env mit den eigenen Werten füllen
+
+# 5. Alles ausführen
+bash run_pipeline.sh
+```
+
+Die Zugangsdaten stehen nur in der lokalen Datei `.env`. Sie wird von Git ignoriert und nie hochgeladen.
+
+## Projektstruktur
+
+```
+├── run_pipeline.sh             # führt die komplette Pipeline aus
+├── scripts/
+│   ├── generate_data.py        # erzeugt die synthetischen Beispieldaten
+│   └── load_raw.py             # lädt die CSV-Dateien nach Snowflake (RAW)
+├── sql/
+│   └── setup_snowflake.sql     # legt Warehouse, Schemas und Tabellen an
+├── dbt/
+│   ├── models/staging/         # bereinigte Daten und Tests
+│   ├── models/marts/           # Faktentabelle und fünf Auswertungen
+│   └── profiles.yml.example    # Vorlage für die Verbindung zu Snowflake
+├── docs/
+│   ├── fachfragen.md           # Fachfragen und Entscheidungen
+│   └── architektur.svg         # Architekturbild
+└── .env.example                # Vorlage für die Zugangsdaten
+```
+
+## Entstehung
+
+Ich habe das Projekt im Dialog mit **Claude** (Anthropic) im Chat gebaut, mit Visual Studio Code, Git und GitHub als Werkzeugen. Claude hat Code und Texte vorgeschlagen. Ich habe die Fachfragen und Entscheidungen bestimmt, jeden Schritt selbst ausgeführt und die Ergebnisse geprüft: Die Pipeline läuft vollständig durch, und die Tests melden die erwarteten Datenfehler.
+
+## Grenzen
+
+- Die Daten sind synthetisch. Die Preise und Modelle sind erfunden und bilden keinen realen Anbieter ab.
+- Es gibt bisher keine automatische Terminplanung (zum Beispiel mit Airflow). Die Pipeline wird per Skript gestartet.
+- Das Projekt ist als Lern- und Vorzeigeprojekt gedacht, nicht als fertiges Produkt.
+
+## Lizenz
+
+MIT, siehe [LICENSE](LICENSE).
