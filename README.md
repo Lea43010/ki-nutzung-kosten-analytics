@@ -49,7 +49,7 @@ Die Pipeline macht sie sichtbar (zwei als Test-Warnungen, alle vier in `MART_DAT
 
 ```bash
 # 1. Repository holen
-git clone https://github.com/Lea43010/ki-nutzung-kosten-analytics.git
+git clone https://github.com/NEUER-NAME/ki-nutzung-kosten-analytics.git
 cd ki-nutzung-kosten-analytics
 
 # 2. Python-Umgebung und Pakete
