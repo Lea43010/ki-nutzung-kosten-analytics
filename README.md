@@ -49,7 +49,7 @@ Die Pipeline macht sie sichtbar (zwei als Test-Warnungen, alle vier in `MART_DAT
 
 ```bash
 # 1. Repository holen
-git clone https://github.com/NEUER-NAME/ki-nutzung-kosten-analytics.git
+git clone https://github.com/lea-zimmer-data/ki-nutzung-kosten-analytics.git
 cd ki-nutzung-kosten-analytics
 
 # 2. Python-Umgebung und Pakete
@@ -68,6 +68,10 @@ bash run_pipeline.sh
 ```
 
 Die Zugangsdaten stehen nur in der lokalen Datei `.env`. Sie wird von Git ignoriert und nie hochgeladen.
+
+## Schnellstart für Einsteiger
+
+Du hast noch nie mit Daten-Werkzeugen gearbeitet, zum Beispiel als Betriebswirtin oder Assistent der Geschäftsführung? Die Anleitung [Schnellstart für absolute Anfänger](docs/schnellstart-anfaenger.md) führt dich ohne Vorkenntnisse in etwa 60 bis 90 Minuten vom leeren Rechner bis zur fertigen Auswertung.
 
 ## Selbst erweitern (für Fachbereiche)
 
@@ -88,6 +92,7 @@ Du möchtest eine eigene Frage beantworten? Die Anleitung [Eigene Auswertung erg
 │   └── profiles.yml.example    # Vorlage für die Verbindung zu Snowflake
 ├── docs/
 │   ├── fachfragen.md           # Fachfragen und Entscheidungen
+│   ├── schnellstart-anfaenger.md       # Einrichtung für absolute Anfänger
 │   ├── eigene-auswertung-ergaenzen.md  # Anleitung für Fachbereiche
 │   └── architektur.svg         # Architekturbild
 └── .env.example                # Vorlage für die Zugangsdaten
